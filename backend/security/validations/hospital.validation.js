@@ -1,3 +1,5 @@
+const { check } = require('express-validator');
+
 const addHospitalValidationRules = [
     check('hospitalid').notEmpty().withMessage('Hospital ID is required')
     .isInt().withMessage('Hospital ID must be an integer'),
