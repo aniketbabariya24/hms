@@ -35,7 +35,7 @@ const getAllPatient = async (req, res) => {
 
 const getAllPatientByHospital = async (req, res) => {
   try {
-    const  hospitalid  = req.params.hospitalid
+    const hospitalid = req.params.hospitalid
     const data = await pool.promise().query(getAllPatientByHospitalQuery, [hospitalid]);
 
     // Check if patient with the given ID exists
@@ -50,9 +50,9 @@ const getAllPatientByHospital = async (req, res) => {
   }
 };
 
-const getPatientByid= async (req, res) => {
+const getPatientByid = async (req, res) => {
   try {
-    const  id  = req.params.id
+    const id = req.params.id
     const data = await pool.promise().query(getPatientByIdQuery, [id]);
 
     // Check if patient with the given ID exists
@@ -69,8 +69,8 @@ const getPatientByid= async (req, res) => {
 
 const updatePatient = async (req, res) => {
   try {
-    const { patientid, age, sex, height, weight, address, bloodgroup, bloodpressure, heartrate, glucoselevel, hemoglobinlevel, doctor, doctornotes, nursenotes, status, lastvisit, hospitalid} = req.body;
-const id = req.params.id
+    const { patientid, age, sex, height, weight, address, bloodgroup, bloodpressure, heartrate, glucoselevel, hemoglobinlevel, doctor, doctornotes, nursenotes, status, lastvisit, hospitalid } = req.body;
+    const id = req.params.id
     await pool.promise().query(updatePatientQuery, [patientid, age, sex, height, weight, address, bloodgroup, bloodpressure, heartrate, glucoselevel, hemoglobinlevel, doctor, doctornotes, nursenotes, status, lastvisit, hospitalid, id]);
 
     res.json({ message: "Patientid updated successfully" });
@@ -85,8 +85,8 @@ const deletePatient = async (req, res) => {
   try {
     const { idarray } = req.body;
 
-    for(let i=0; i<=idarray.length-1; i++){
-  await pool.promise().query(deletePatientQuery, [idarray[i]]);
+    for (let i = 0; i <= idarray.length - 1; i++) {
+      await pool.promise().query(deletePatientQuery, [idarray[i]]);
     }
 
     res.json({ message: "Patientid added successfully" });
