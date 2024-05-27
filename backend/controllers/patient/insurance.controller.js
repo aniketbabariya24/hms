@@ -1,7 +1,7 @@
 const { pool } = require("../../config/db");
-const { addInsuranceQuery, getAllInsuranceQuery, getAllInsuranceByHospitalQuery, updateInsuranceQuery, deleteInsuranceQuery, getInsuranceByIdQuery } = require("../../queries/patient/insurance.query");
+const {  getAllInsuranceQuery, getInsuranceByPatientQuery, deleteInsuranceQuery, getInsuranceByIdQuery } = require("../../queries/patient/insurance.query");
 
-
+//Added
 const addInsurance = async (req, res) => {
     try {
       const data = req.body;
@@ -26,58 +26,58 @@ const addInsurance = async (req, res) => {
     }
   };
   
-
+//Get all
 const getAllInsurance = async (req, res) => {
   try {
 
     const data = await pool.promise().query(getAllInsuranceQuery);
 
-    // Check if patient with the given ID exists
     if (data.length === 0) {
       return res.status(404).json({ message: 'Insurance not found' });
     }
 
-    res.json({ patients: data[0], dataCount: data[0].length });
+    res.json({ insurance: data[0], dataCount: data[0].length });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
-const getAllInsuranceByHospital = async (req, res) => {
+// Get by patient id
+const getInsuranceByPatient = async (req, res) => {
   try {
-    const hospitalid = req.params.hospitalid
-    const data = await pool.promise().query(getAllInsuranceByHospitalQuery, [hospitalid]);
+    const patientid = req.params.patientid
+    const data = await pool.promise().query(getInsuranceByPatientQuery, [patientid]);
 
-    // Check if patient with the given ID exists
+
     if (data.length === 0) {
       return res.status(404).json({ message: 'Insurance not found' });
     }
 
-    res.json({ patient: data[0], dataCount: data[0].length });
+    res.json({ insurance: data[0], dataCount: data[0].length });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
+//Get by id
 const getInsuranceByid = async (req, res) => {
   try {
     const id = req.params.id
     const data = await pool.promise().query(getInsuranceByIdQuery, [id]);
 
-    // Check if patient with the given ID exists
     if (data[0].length === 0) {
       return res.status(404).json({ message: 'Insurance not found' });
     }
 
-    res.json({ patient: data[0], dataCount: data[0].length });
+    res.json({ insurance: data[0], dataCount: data[0].length });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
+//Update
 const updateInsurance = async (req, res) => {
     try {
       const { id } = req.params; // Get the id from req.params
@@ -110,7 +110,7 @@ const updateInsurance = async (req, res) => {
     }
   };
   
-
+//Delete
 const deleteInsurance = async (req, res) => {
   try {
     const { idarray } = req.body;
@@ -119,7 +119,7 @@ const deleteInsurance = async (req, res) => {
       await pool.promise().query(deleteInsuranceQuery, [idarray[i]]);
     }
 
-    res.json({ message: "Insuranceid added successfully" });
+    res.json({ message: "Insuranceid deleted successfully" });
   } catch (error) {
     console.log(error);
   }
@@ -127,4 +127,4 @@ const deleteInsurance = async (req, res) => {
 
 };
 
-module.exports = { addInsurance, getAllInsurance, updateInsurance, getAllInsuranceByHospital, deleteInsurance, getInsuranceByid };
+module.exports = { addInsurance, getAllInsurance, updateInsurance, getInsuranceByPatient, deleteInsurance, getInsuranceByid };

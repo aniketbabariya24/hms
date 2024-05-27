@@ -1,8 +1,9 @@
 const express = require('express');
 
 const cors = require('cors');
-const { patientroute } = require('./routes/patient/patient.routes');
-const { hospitalroute } = require('./routes/hospital/hospital.routes');
+const { patientRoute } = require('./routes/patient/patient.routes');
+const { hospitalRoute } = require('./routes/hospital/hospital.routes');
+const { insuranceRoute } = require('./routes/patient/insurance.routes');
 
 const app = express();
 
@@ -16,9 +17,11 @@ app.use(
 );
 
 
-app.use('/patient', patientroute)
+app.use('/patient', patientRoute)
 
-app.use('/hospital', hospitalroute)
+app.use('/hospital', hospitalRoute)
+app.use('/insurance', insuranceRoute)
+
 
 app.listen(PORT, ()=>{
     console.log(`server runing at port ${PORT}`);
