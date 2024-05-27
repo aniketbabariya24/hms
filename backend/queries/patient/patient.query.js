@@ -11,7 +11,7 @@ const getAllPatientByHospitalQuery = 'SELECT * FROM patient WHERE hospitalid = ?
 
 const getPatientByIdQuery = 'SELECT * FROM patient WHERE id = ?';
 
-const deletePatientQuery = 'DELETE * FROM patient WHERE id = ?';
+const deletePatientQuery = 'DELETE FROM patient WHERE id = ?';
 
 
 module.exports= {addPatientQuery, getAllPatientQuery, getAllPatientByHospitalQuery, updatePatientQuery, deletePatientQuery, getPatientByIdQuery}

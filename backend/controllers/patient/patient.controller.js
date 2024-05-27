@@ -89,7 +89,7 @@ const deletePatient = async (req, res) => {
       await pool.promise().query(deletePatientQuery, [idarray[i]]);
     }
 
-    res.json({ message: "Patientid added successfully" });
+    res.json({ message: "Patientid deleted successfully" });
   } catch (error) {
     console.log(error);
   }
