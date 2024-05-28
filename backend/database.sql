@@ -75,3 +75,40 @@ CREATE TABLE insurance (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE staff (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    staffid VARCHAR(255),
+    fullname VARCHAR(255) NOT NULL,
+    dob DATE NOT NULL,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    contactno VARCHAR(20) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    joiningdate DATE NOT NULL,
+    qualification VARCHAR(255) NOT NULL,
+    experience INT,
+    status ENUM('Active', 'On Leave', 'Retired') NOT NULL,
+    profileimage VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE appointment (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+    appointmentid VARCHAR(255) PRIMARY KEY,
+    patientid INTEGER NOT NULL,
+    hospitalid INTEGER NOT NULL,
+    staffid INTEGER NOT NULL,
+    appointmentdate DATE NOT NULL,
+    appointmenttime TIME NOT NULL,
+    reasonforvisit VARCHAR(255) NOT NULL,
+    status ENUM('Scheduled', 'Completed', 'Cancelled') NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
