@@ -4,6 +4,8 @@ const cors = require('cors');
 const { patientRoute } = require('./routes/patient/patient.routes');
 const { hospitalRoute } = require('./routes/hospital/hospital.routes');
 const { insuranceRoute } = require('./routes/patient/insurance.routes');
+const { staffRoute } = require('./routes/hospital/staff.routes');
+const { appointmentRoute } = require('./routes/patient/appointment.routes');
 
 const app = express();
 
@@ -21,6 +23,10 @@ app.use('/patient', patientRoute)
 
 app.use('/hospital', hospitalRoute)
 app.use('/insurance', insuranceRoute)
+app.use('/staff', staffRoute)
+app.use('/appointment', appointmentRoute)
+
+
 
 
 app.listen(PORT, ()=>{
