@@ -112,3 +112,31 @@ CREATE TABLE appointment (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE item (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    itemid VARCHAR(255) NOT NULL,
+    itemname VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    brand VARCHAR(200),
+    unit VARCHAR(255),
+    itemdescription TEXT,
+    hsncode VARCHAR(255),
+    hsndescription TEXT,
+    taxabilitytype VARCHAR(255),
+    gst VARCHAR(255),
+    image VARCHAR(1000)[],
+    grade VARCHAR(255),
+    openingqty INT NOT NULL,
+    rateperunit DECIMAL(10, 2) NOT NULL,
+    openingvalue DECIMAL(10, 2) NOT NULL,
+    reorderpoint INT NOT NULL,
+    asondate DATE,
+    currentquantity INT NOT NULL,
+    currentrate DECIMAL(10, 2) NOT NULL,
+    currentvalue DECIMAL(10, 2) NOT NULL,
+    hospitalid VARCHAR(255),
+    staffid VARCHAR(255),
+    createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
