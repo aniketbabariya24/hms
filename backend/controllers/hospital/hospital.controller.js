@@ -77,8 +77,7 @@ const updateHospital = async (req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
 
-    // Fetch the existing record
-    const [existingRecord] = await pool.promise().query('SELECT * FROM hospitals WHERE id = ?', [id]);
+    const [existingRecord] = await pool.promise().query('SELECT * FROM hospital WHERE id = ?', [id]);
 
     if (existingRecord.length === 0) {
       return res.status(404).json({ message: 'Hospital not found' });
@@ -158,7 +157,7 @@ const updateHospital = async (req, res) => {
 
     valuesToUpdate.push(id);
 
-    const updateQuery = `UPDATE hospitals SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
+    const updateQuery = `UPDATE hospital SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
 
     await pool.promise().query(updateQuery, valuesToUpdate);
 
@@ -170,6 +169,57 @@ const updateHospital = async (req, res) => {
   }
 };
 
+const getAllHospitals = async (req, res) => {
+  try {
+    let { page = 1, limit = 10, sortBy = 'hospitalName', order = 'asc' } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const offset = (page - 1) * limit;
+
+    const query = `SELECT * FROM hospital ORDER BY ${sortBy} ${order.toUpperCase()} LIMIT ? OFFSET ?`;
+    
+    const [hospitals] = await pool.promise().query(query, [limit, offset]);
+
+    const [totalCountResult] = await pool.promise().query('SELECT COUNT(*) AS total FROM hospital');
+    const total = totalCountResult[0].total;
+
+    res.json({
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      totalHospitals: total,
+      hospitals,
+    });
+  } catch (error) {
+    console.log("Error in getAllHospitals controller");
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const deleteHospital = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if the hospital exists
+    const [existingRecord] = await pool.promise().query('SELECT * FROM hospitals WHERE id = ?', [id]);
+
+    if (existingRecord.length === 0) {
+      return res.status(404).json({ message: 'Hospital not found' });
+    }
+
+    // Delete the hospital record
+    await pool.promise().query('DELETE FROM hospitals WHERE id = ?', [id]);
+
+    res.json({ message: "Hospital deleted successfully" });
+  } catch (error) {
+    console.log("Error in deleteHospital controller");
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
-module.exports = { addHospital, updateHospital };
+module.exports = { addHospital, updateHospital, getAllHospitals, deleteHospital };
