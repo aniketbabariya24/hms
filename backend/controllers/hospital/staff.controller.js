@@ -10,7 +10,6 @@ const addStaff = async (req, res) => {
     const keys = Object.keys(data);
     const values = Object.values(data);
 
-    // Construct the query
     const query = `
       INSERT INTO staff (${keys.join(', ')})
       VALUES (${keys.map(() => '?').join(', ')})

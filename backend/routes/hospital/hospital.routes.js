@@ -1,10 +1,12 @@
 const {Router} = require("express");
-const { addHospital } = require("../../controllers/hospital/hospital.controller");
+const { addHospital, updateHospital } = require("../../controllers/hospital/hospital.controller");
 const { addHospitalValidationRules } = require("../../security/validations/hospital.validation");
 
 const hospitalRoute = Router();
 
-hospitalRoute.post('/addhospital', addHospitalValidationRules ,addHospital)
+hospitalRoute.post('/addhospital', addHospital)
+hospitalRoute.post('/updateospital', updateHospital)
+
 
 
 
